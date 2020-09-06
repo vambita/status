@@ -6,10 +6,6 @@ pipeline {
         pollSCM('*/2 * * * *')
     }
 
-    tools {
-        gradlew 'gradle'
-    }
-
     options {
       disableConcurrentBuilds()
    }
