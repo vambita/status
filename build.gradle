@@ -6,9 +6,12 @@ plugins {
 
 group = 'com.vambita.work'
 version = '0.0.1-SNAPSHOT'
-sourceCompatibility = '13'
+sourceCompatibility = '14'
 
 repositories {
+	maven {
+		url "http://nexus-cicd.apps.ocppre.qidbnet.local/repository/maven-public/"
+	}
 	mavenCentral()
 }
 
