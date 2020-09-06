@@ -1,0 +1,9 @@
+server:
+  servlet:
+    context-path: /vmbt-status
+  port: 9191
+spring:
+  main:
+    banner-mode: 'OFF'
+  application:
+    name: vmbt-status
