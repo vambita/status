@@ -8,7 +8,7 @@ pipeline {
 
     options {
       disableConcurrentBuilds()
-   }
+    }
 
     stages {
         stage ("Prepare-For-Build") {
@@ -18,25 +18,30 @@ pipeline {
             steps {
                 echo "jdk path: ${jdk}"
                 sh 'java -version'
+                echo 'Building branch ${env.BRANCH_NAME}'
             }
         }
 
         stage('Build') {
             steps {
-                sh './gradlew assemble'
+                gradlew('assemble')
             }
         }
 
         stage('Run-Unit-Tests') {
             steps {
-                sh './gradlew test'
+                gradlew('test')
             }
         }
 
         stage('Build-Docker-Image') {
             steps {
-                sh './gradlew bootBuildImage vambita/${}${env.BUILD_ID}'
+                gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}')
             }
         }
     }
+}
+
+def gradlew(String... args) {
+    sh "./gradlew ${args.join(' ')} -s"
 }
