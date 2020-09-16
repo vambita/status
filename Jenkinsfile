@@ -17,9 +17,9 @@ pipeline {
     stages {
         stage ('Prepare-For-Build') {
             steps {
-                echo "jdk path: ${jdk}"
-                sh 'java -version'
+                echo "jdk path: ${env.JAVA_HOME}"
                 echo 'Building branch ${env.BRANCH_NAME}'
+                sh 'java -version'
             }
         }
 
