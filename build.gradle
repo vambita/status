@@ -2,6 +2,7 @@ plugins {
 	id 'org.springframework.boot' version '2.3.3.RELEASE'
 	id 'io.spring.dependency-management' version '1.0.10.RELEASE'
 	id 'java'
+	id 'jacoco'
 }
 
 group = 'com.vambita.work'
@@ -17,10 +18,12 @@ springBoot {
 	buildInfo()
 }
 
+jacoco {
+	toolVersion = "0.8.5"
+	reportsDir = file("$buildDir/customJacocoReportDir")
+}
+
 repositories {
-	maven {
-		url "http://nexus-cicd.apps.ocppre.qidbnet.local/repository/maven-public/"
-	}
 	mavenCentral()
 }
 
@@ -38,4 +41,14 @@ dependencies {
 
 test {
 	useJUnitPlatform()
+	finalizedBy jacocoTestReport
+}
+
+jacocoTestReport {
+    dependsOn test
+    reports {
+        xml.enabled false
+        csv.enabled false
+        html.destination file("${buildDir}/jacocoHtml")
+    }
 }
