@@ -75,11 +75,6 @@ pipeline {
         }
     }
 
-    post {
-        failure {
-            mail to: 'sipatha@vambita.com', subject: 'Build failed', body: 'Please fix!'
-        }
-    }
 }
 
 def gradlew(String... args) {
