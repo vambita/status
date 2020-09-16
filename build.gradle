@@ -8,6 +8,15 @@ group = 'com.vambita.work'
 version = '0.0.1-SNAPSHOT'
 sourceCompatibility = '14'
 
+bootBuildImage {
+	imageName = "vambita/${project.name}:${project.version}"
+	cleanCache = true
+}
+
+springBoot {
+	buildInfo()
+}
+
 repositories {
 	maven {
 		url "http://nexus-cicd.apps.ocppre.qidbnet.local/repository/maven-public/"

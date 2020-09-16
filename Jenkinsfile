@@ -11,21 +11,31 @@ pipeline {
    }
 
     stages {
-        stage('build') {
+        stage ("Prepare-For-Build") {
+            tools {
+               jdk "jdk-14.0.2"
+            }
+            steps {
+                echo "jdk path: ${jdk}"
+                sh 'java -version'
+            }
+        }
+
+        stage('Build') {
             steps {
                 sh './gradlew assemble'
             }
         }
 
-        stage('unit test') {
+        stage('Run-Unit-Tests') {
             steps {
                 sh './gradlew test'
             }
         }
 
-        stage('docker-image') {
+        stage('Build-Docker-Image') {
             steps {
-                sh './gradlew bootBuildImage'
+                sh './gradlew bootBuildImage vambita/${}${env.BUILD_ID}'
             }
         }
     }
