@@ -10,16 +10,16 @@ pipeline {
       disableConcurrentBuilds()
     }
 
-    environment {
-        JAVA_HOME="${ tool 'jdk-14.0.2' }"
-    }
-
     stages {
         stage ('Prepare-For-Build') {
+            tools {
+               jdk 'jdk-14.0.2'
+            }
+
             steps {
-                echo "jdk path: ${env.JAVA_HOME}"
-                echo 'Building branch ${env.BRANCH_NAME}'
                 sh 'java -version'
+                echo 'Using Java ${env.JAVA_NAME}'
+                echo 'Building branch ${env.BRANCH_NAME}'
             }
         }
 
