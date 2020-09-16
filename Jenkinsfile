@@ -25,15 +25,9 @@ pipeline {
             }
         }
 
-        stage('Compile') {
-            steps {
-                gradlew('clean', 'classes')
-            }
-        }
-
         stage('Assemble') {
             steps {
-                gradlew('assemble')
+                gradlew('clean', 'classes', 'assemble')
                 stash includes: '**/build/libs/*.war', name: 'vambita-status'
             }
         }
