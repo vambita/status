@@ -1,3 +1,5 @@
+#!groovy
+
 pipeline {
 
     agent any
@@ -40,6 +42,7 @@ pipeline {
             steps {
                 gradlew('test')
             }
+
             post {
                 always {
                     junit '**/build/test-results/test/TEST-*.xml'
@@ -51,17 +54,20 @@ pipeline {
             environment {
                 TEST_ITEM = '123'
             }
+
             parallel {
                 stage('Integration Tests') {
                     steps {
                         gradlew('integrationTest')
                     }
+
                     post {
                         always {
                             junit '**/build/test-results/integrationTest/TEST-*.xml'
                         }
                     }
                 }
+
                 stage('Code Analysis') {
                     steps {
                         gradlew('sonarqube')
