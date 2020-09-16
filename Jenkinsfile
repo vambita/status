@@ -10,12 +10,12 @@ pipeline {
       disableConcurrentBuilds()
     }
 
-    tools {
-       jdk "jdk-14.0.2"
+    environment {
+        JAVA_HOME=${ tool 'jdk-14.0.2' }
     }
 
     stages {
-        stage ("Prepare-For-Build") {
+        stage ('Prepare-For-Build') {
             steps {
                 echo "jdk path: ${jdk}"
                 sh 'java -version'
@@ -85,5 +85,5 @@ pipeline {
 }
 
 def gradlew(String... args) {
-    sh "./gradlew ${args.join(' ')} -s"
+    sh './gradlew ${args.join(' ')} -s'
 }
