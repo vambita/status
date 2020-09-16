@@ -28,7 +28,7 @@ pipeline {
         stage('Assemble') {
             steps {
                 gradlew('clean', 'classes', 'assemble')
-                stash includes: '**/build/libs/*.war', name: 'vambita-status'
+                stash includes: '**/build/libs/*.jar', name: 'vambita-status'
             }
         }
 
@@ -78,5 +78,5 @@ pipeline {
 }
 
 def gradlew(String... args) {
-    sh "./gradlew ${args.join(' ')} --stacktrace --scan"
+    sh "./gradlew ${args.join(' ')}"
 }
