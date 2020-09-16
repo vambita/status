@@ -13,20 +13,15 @@ pipeline {
     }
 
     environment {
-        env.JAVA_HOME="${tool 'jdk-8u45'}"
-        env.PATH="${env.JAVA_HOME}/bin:${env.PATH}"
-        sh 'java -version'
+        JAVA_HOME=${ tool 'jdk-14.0.2' }
     }
 
     stages {
         stage ('Prepare-For-Build') {
-            tools {
-               jdk 'jdk-14.0.2'
-            }
-
             steps {
-                sh 'java -version'
                 echo 'Using Java ${env.JAVA_NAME}'
+                sh 'java -version'
+
                 echo 'Building branch ${env.BRANCH_NAME}'
             }
         }
@@ -60,13 +55,11 @@ pipeline {
             environment {
                 TEST_ITEM = '123'
             }
-
             parallel {
                 stage('Integration Tests') {
                     steps {
                         gradlew('integrationTest')
                     }
-
                     post {
                         always {
                             junit '**/build/test-results/integrationTest/TEST-*.xml'
