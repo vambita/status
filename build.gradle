@@ -24,6 +24,12 @@ jacoco {
 	reportsDir = file("$buildDir/customJacocoReportDir")
 }
 
+sonarqube {
+	properties {
+		property 'sonar.projectName', 'Status Project'
+	}
+}
+
 repositories {
 	mavenCentral()
 }
