@@ -2,6 +2,7 @@
 
 pipeline {
 
+    //-- create a build number
     agent any
 
     triggers {
@@ -69,8 +70,16 @@ pipeline {
         }
 
         stage('Build-Docker-Image') {
+            con
             steps {
-                gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}')
+                gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}') //-- send to oc registry
+            }
+        }
+
+        stage('Deploy') {
+            co
+            steps {
+                gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}') //-- send to oc registry
             }
         }
     }
