@@ -16,14 +16,17 @@ pipeline {
     environment {
         JAVA_HOME="${ tool 'jdk-14.0.2' }"
         DOCKER_HOME="${ tool 'docker-latest' }"
+        PATH = '$PATH:$JAVA_HOME/bin/:$DOCKER_HOME/bin'
     }
 
     stages {
         stage ('Prepare-For-Build') {
             steps {
-                echo 'Using Java ${env.JAVA_NAME}'
+                echo 'Path      : $PATH'
+                echo 'Java      : $JAVA_NAME'
+                echo 'Building  : $BRANCH_NAME'
                 sh '$JAVA_HOME/bin/java  -version'
-                echo 'Building branch ${env.BRANCH_NAME}'
+
             }
         }
 
