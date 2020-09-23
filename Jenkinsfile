@@ -70,14 +70,12 @@ pipeline {
         }
 
         stage('Build-Docker-Image') {
-            con
             steps {
                 gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}') //-- send to oc registry
             }
         }
 
         stage('Deploy') {
-            co
             steps {
                 gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}') //-- send to oc registry
             }
