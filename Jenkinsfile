@@ -50,8 +50,8 @@ pipeline {
                     }
                 }
 
-                withCredentials([string(credentialsId: 'sonarqube-token', variable: 'TOKEN')]) {
-                    stage('Code Analysis') {
+                stage('Code Analysis') {
+                    withCredentials([string(credentialsId: 'sonarqube-token', variable: 'TOKEN')]) {
                         steps {
                             gradlew('-Dsonar.host.url=http://sonar-qube:9000', '-Dsonar.login=${TOKEN}', 'sonarqube')
                         }
