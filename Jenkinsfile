@@ -23,7 +23,7 @@ pipeline {
         stage ('Prepare-For-Build') {
             steps {
                 echo "Path      : $PATH"
-                echo "Java      : $JAVA_NAME"
+                echo "Java      : $JAVA_HOME"
                 echo "Building  : $BRANCH_NAME"
                 sh "$JAVA_HOME/bin/java  -version"
 
