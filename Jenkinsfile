@@ -33,30 +33,19 @@ pipeline {
             }
         }
 
-        stage('Run-Unit-Tests') {
-            steps {
-                gradlew('test')
-            }
-
-            post {
-                always {
-                    junit '**/build/test-results/test/TEST-*.xml'
-                }
-            }
-        }
-
         stage('Verification') {
             environment {
                 TEST_ITEM = '123'
             }
             parallel {
-                stage('Integration Tests') {
+                stage('Run-Unit-Tests') {
                     steps {
-                        gradlew('integrationTest')
+                        gradlew('test')
                     }
+
                     post {
                         always {
-                            junit '**/build/test-results/integrationTest/TEST-*.xml'
+                            junit '**/build/test-results/test/TEST-*.xml'
                         }
                     }
                 }
