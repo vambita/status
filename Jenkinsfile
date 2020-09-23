@@ -15,14 +15,15 @@ pipeline {
 
     environment {
         JAVA_HOME="${ tool 'jdk-14.0.2' }"
+        DOCKER_HOME="${ tool 'docker-latest' }"
     }
 
     stages {
         stage ('Prepare-For-Build') {
             steps {
-                echo 'Using Java ${JAVA_NAME}'
+                echo 'Using Java ${env.JAVA_NAME}'
                 sh '$JAVA_HOME/bin/java  -version'
-                echo 'Building branch ${BRANCH_NAME}'
+                echo 'Building branch ${env.BRANCH_NAME}'
             }
         }
 
@@ -62,13 +63,13 @@ pipeline {
 
         stage('Build-Docker-Image') {
             steps {
-                gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}') //-- send to oc registry
+                gradlew('docker')
             }
         }
 
-        stage('Deploy') {
+        stage('Publish') {
             steps {
-                gradlew('bootBuildImage', 'vambita/status${env.BUILD_ID}') //-- send to oc registry
+                gradlew('dockerPush')
             }
         }
     }
