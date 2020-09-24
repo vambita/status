@@ -2,6 +2,8 @@
 
 pipeline {
 
+    def app
+
     //-- create a build number
     agent any
 
@@ -70,7 +72,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "docker build -t vambita/status:latest ."
+                app = docker.build("vambita/status")
             }
         }
 
@@ -79,9 +81,9 @@ pipeline {
                 branch 'master'
             }
             steps {
-                withCredentials([usernamePassword(credentialsId:'docker-registry-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
-                    sh "docker login nexus:8184 --username ${USERNAME} --password ${PASSWORD}"
-                    sh "docker push nexus:8184/vambita/status:latest"
+                docker.withRegistry('http://nexus:8184', 'docker-registry-credentials') {
+                    app.push("${env.BUILD_NUMBER}")
+                    app.push("latest")
                 }
             }
         }
