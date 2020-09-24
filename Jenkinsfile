@@ -2,8 +2,6 @@
 
 pipeline {
 
-    def app
-
     //-- create a build number
     agent any
 
@@ -66,23 +64,15 @@ pipeline {
             }
         }
 
-        stage('Build-Docker-Image') {
-            when{
-                branch 'master'
-            }
-            steps {
-                app = docker.build("vambita/status")
-            }
-        }
-
-        stage('Publish') {
+        stage('Build & Publish') {
             when{
                 branch 'master'
             }
             steps {
                 docker.withRegistry('http://nexus:8184', 'docker-registry-credentials') {
-                    app.push("${env.BUILD_NUMBER}")
-                    app.push("latest")
+                    def theImage = docker.build("vambita/status")
+                    theImage.push("${env.BUILD_NUMBER}")
+                    theImage.push("latest")
                 }
             }
         }
