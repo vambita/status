@@ -70,7 +70,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "docker build --tag http://nexus:8184/vambita/status:latest ."
+                sh "docker build -t http://nexus:8184/vambita/status:latest ."
             }
         }
 
