@@ -26,7 +26,7 @@ pipeline {
                 echo "Java      : $JAVA_HOME"
                 echo "Building  : $BRANCH_NAME"
                 sh "$JAVA_HOME/bin/java  -version"
-                sh "$DOCKER_HOME/bin/docker -version"
+                sh "$DOCKER_HOME/bin/docker --version"
 
             }
         }
@@ -66,14 +66,23 @@ pipeline {
         }
 
         stage('Build-Docker-Image') {
+            when{
+                branch 'master'
+            }
             steps {
-                gradlew('docker')
+                sh "docker build --tag http://nexus:8184/vambita/${project.name}:${project.version} ."
             }
         }
 
         stage('Publish') {
+            when{
+                branch 'master'
+            }
             steps {
-                gradlew('dockerPush')
+                withCredentials([usernamePassword(credentialsId:'docker-registry-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
+                    sh "docker login http://nexus:8184 --username ${USERNAME} --password ${PASSWORD}"
+                    sh "docker push http://nexus:8184/vambita/${project.name}:${project.version}"
+                }
             }
         }
     }
