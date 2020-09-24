@@ -17,8 +17,7 @@ pipeline {
 
     environment {
         JAVA_HOME="${ tool 'jdk-14.0.2' }"
-        DOCKER_HOME="${ tool 'docker-latest' }"
-        PATH = "$PATH:$JAVA_HOME/bin/:$DOCKER_HOME/bin"
+        PATH = "$PATH:$JAVA_HOME/bin/"
     }
 
     stages {
