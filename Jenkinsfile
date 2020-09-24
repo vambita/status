@@ -69,10 +69,12 @@ pipeline {
                 branch 'master'
             }
             steps {
-                docker.withRegistry('http://nexus:8184', 'docker-registry-credentials') {
-                    def theImage = docker.build("vambita/status")
-                    theImage.push("${env.BUILD_NUMBER}")
-                    theImage.push("latest")
+                script {
+                    docker.withRegistry('http://nexus:8184', 'docker-registry-credentials') {
+                        def theImage = docker.build("vambita/status")
+                        theImage.push("${env.BUILD_NUMBER}")
+                        theImage.push("latest")
+                    }
                 }
             }
         }
