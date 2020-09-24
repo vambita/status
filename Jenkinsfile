@@ -25,7 +25,6 @@ pipeline {
                 echo "Java      : $JAVA_HOME"
                 echo "Building  : $BRANCH_NAME"
                 sh "$JAVA_HOME/bin/java  -version"
-                sh "$DOCKER_HOME/bin/docker --version"
 
             }
         }
