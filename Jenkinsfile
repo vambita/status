@@ -70,7 +70,7 @@ pipeline {
                 branch 'master'
             }
             steps {
-                sh "docker build --tag http://nexus:8184/vambita/${project.name}:${project.version} ."
+                sh "docker build --tag http://nexus:8184/vambita/status:latest ."
             }
         }
 
@@ -81,7 +81,7 @@ pipeline {
             steps {
                 withCredentials([usernamePassword(credentialsId:'docker-registry-credentials', usernameVariable: 'USERNAME', passwordVariable: 'PASSWORD')]) {
                     sh "docker login http://nexus:8184 --username ${USERNAME} --password ${PASSWORD}"
-                    sh "docker push http://nexus:8184/vambita/${project.name}:${project.version}"
+                    sh "docker push http://nexus:8184/vambita/status:latest"
                 }
             }
         }
