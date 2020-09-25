@@ -25,6 +25,7 @@ pipeline {
                 echo "Java      : $JAVA_HOME"
                 echo "Building  : $BRANCH_NAME"
                 sh "$JAVA_HOME/bin/java  -version"
+                sh "whoami"
 
             }
         }
@@ -70,7 +71,7 @@ pipeline {
             steps {
                 script {
                     docker.withRegistry('http://nexus:8184', 'docker-registry-credentials') {
-                        def theImage = docker.build("vambita/status")
+                        def theImage = docker.build("vambita/status", '--no-cache=true dockerbuild')
                         theImage.push("${env.BUILD_NUMBER}")
                         theImage.push("latest")
                     }
