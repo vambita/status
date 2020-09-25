@@ -17,7 +17,7 @@ pipeline {
         JAVA_HOME="${ tool 'jdk-14.0.2' }"
         PATH = "$PATH:$JAVA_HOME/bin/"
         CUSTOM_DOCKER_REGISTRY = sh (
-            script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-nexus',
+            script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-docker-registry',
             returnStdout: true
         ).trim()
     }
