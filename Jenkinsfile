@@ -30,7 +30,6 @@ pipeline {
                 echo "Building  : $BRANCH_NAME"
                 sh "$JAVA_HOME/bin/java  -version"
                 sh "whoami"
-                sh "CUSTOM_DOCKER_REGISTRY="
             }
         }
 
@@ -74,7 +73,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('http://${CUSTOM_DOCKER_REGISTRY}:8184', 'docker-registry-credentials') {
+                    docker.withRegistry('http://${CUSTOM_DOCKER_REGISTRY}:8184', 'docker-registry-credentials', '--insecure-registry ${CUSTOM_DOCKER_REGISTRY}:8184') {
                         def theImage = docker.build("vambita/status", '--no-cache=true dockerbuild')
                         theImage.push("${env.BUILD_NUMBER}")
                         theImage.push("latest")
