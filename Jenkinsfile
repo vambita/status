@@ -15,6 +15,7 @@ pipeline {
 
     environment {
         JAVA_HOME="${ tool 'jdk-14.0.2' }"
+        //-- nodejs
         PATH = "$PATH:$JAVA_HOME/bin/"
         CUSTOM_DOCKER_REGISTRY = sh (
             script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-nexus',
@@ -81,6 +82,14 @@ pipeline {
                 }
             }
         }
+
+        stage('Deployment') {
+            when {
+                branch 'master'
+            }
+            sh "oc rollout"
+        }
+
     }
 
 }
