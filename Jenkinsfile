@@ -73,7 +73,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('http://${CUSTOM_DOCKER_REGISTRY}:8184', 'docker-registry-credentials') {
+                    docker.withRegistry('http://${CUSTOM_DOCKER_REGISTRY}:8443', 'docker-registry-credentials') {
                         def theImage = docker.build("vambita/status", '--no-cache=true dockerbuild')
                         theImage.push("${env.BUILD_NUMBER}")
                         theImage.push("latest")
