@@ -17,7 +17,7 @@ pipeline {
         JAVA_HOME="${ tool 'jdk-14.0.2' }"
         PATH = "$PATH:$JAVA_HOME/bin/"
         CUSTOM_DOCKER_REGISTRY = sh (
-            script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-docker-registry',
+            script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-nexus',
             returnStdout: true
         ).trim()
     }
@@ -73,7 +73,7 @@ pipeline {
             }
             steps {
                 script {
-                    docker.withRegistry('https://${CUSTOM_DOCKER_REGISTRY}', 'docker-registry-credentials') {
+                    docker.withRegistry('http://${CUSTOM_DOCKER_REGISTRY}:8184', 'docker-registry-credentials') {
                         def theImage = docker.build("vambita/status", '--no-cache=true dockerbuild')
                         theImage.push("${env.BUILD_NUMBER}")
                         theImage.push("latest")
