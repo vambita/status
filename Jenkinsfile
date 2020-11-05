@@ -84,7 +84,9 @@ pipeline {
             when {
                 branch 'master'
             }
-            sh "oc rollout"
+            steps {
+                sh "oc rollout"
+            }
         }
 
     }
