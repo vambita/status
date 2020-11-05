@@ -14,9 +14,7 @@ pipeline {
     }
 
     environment {
-        JAVA_HOME="${ tool 'jdk-14.0.2' }"
         //-- nodejs
-        PATH = "$PATH:$JAVA_HOME/bin/"
         CUSTOM_DOCKER_REGISTRY = sh (
             script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-nexus',
             returnStdout: true
@@ -27,9 +25,8 @@ pipeline {
         stage ('Prepare-For-Build') {
             steps {
                 echo "Path      : $PATH"
-                echo "Java      : $JAVA_HOME"
                 echo "Building  : $BRANCH_NAME"
-                sh "$JAVA_HOME/bin/java  -version"
+                sh "java  -version"
                 sh "whoami"
             }
         }
