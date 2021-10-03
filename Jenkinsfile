@@ -14,6 +14,7 @@ pipeline {
     }
 
     environment {
+        JAVA_HOME="${ tool 'v16' }"
         //-- nodejs
         CUSTOM_DOCKER_REGISTRY = sh (
             script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-nexus',
