@@ -14,7 +14,7 @@ pipeline {
     }
 
     environment {
-        JAVA_HOME="${ tool 'jdk16' }"
+        JAVA_HOME="${ tool 'jdk11' }"
     }
 
     stages {
@@ -22,7 +22,7 @@ pipeline {
             steps {
                 echo "Path      : $PATH"
                 echo "Building  : $BRANCH_NAME"
-                sh "java  -version"
+                sh "./gradlew -v"
                 sh "whoami"
             }
         }
