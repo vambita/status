@@ -15,11 +15,6 @@ pipeline {
 
     environment {
         JAVA_HOME="${ tool 'v16' }"
-        //-- nodejs
-        CUSTOM_DOCKER_REGISTRY = sh (
-            script: 'docker inspect -f \'{{range .NetworkSettings.Networks}}{{.IPAddress}}{{end}}\' local-nexus',
-            returnStdout: true
-        ).trim()
     }
 
     stages {
@@ -59,7 +54,7 @@ pipeline {
                 stage('Code Analysis') {
                     steps {
                         withCredentials([string(credentialsId: 'sonarqube-token', variable: 'TOKEN')]) {
-                            gradlew('-Dsonar.host.url=http://sonar-qube:9000', '-Dsonar.login=${TOKEN}', 'sonarqube')
+                            gradlew('-Dsonar.host.url=http://sonar.vmbt.local', '-Dsonar.login=${TOKEN}', 'sonarqube')
                         }
                     }
                 }
