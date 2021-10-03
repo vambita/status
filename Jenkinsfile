@@ -14,7 +14,7 @@ pipeline {
     }
 
     environment {
-        JAVA_HOME="${ tool 'v16' }"
+        JAVA_HOME="${ tool 'jdk16' }"
     }
 
     stages {
